@@ -10,77 +10,56 @@ namespace Lab9
     {
         static void Main(string[] args)
         {
-            int x = 0, y = 0;
             Console.WriteLine("Вас приветствует калькулятор!");
-            Console.Write("Введите целое число: Х=");
+
             try
             {
-                x = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите целое число: Х=");
+                int x = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите целое число: Y=");
+                int y = Convert.ToInt32(Console.ReadLine());
+                Calc(x, y);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Ошибка! {0}", ex.Message);
             }
-            Console.Write("Введите целое число: Y=");
-            try
-            {
-                y = Convert.ToInt32(Console.ReadLine());
-            }
-            catch
-            {
-                Console.WriteLine("Ошибка! Входная строка имела неверный формат.");
-            }
-
-
-            double result = Calc(x, y);
-            Console.WriteLine("Результат: {0:f2}", result);
             Console.ReadKey();
-
         }
-        static double Calc(int x, int y)
+
+
+        static void Calc(int x, int y)
         {
-            double result = 0;
-            int option = 0;
-            Console.Write("Введите код операции:\n   1 - Сложение\n   2 - Вычитание\n   3 - Произведение\n   4 - Частное\nВаш выбор:");
-            try
-            {
-                option = Convert.ToInt32(Console.ReadLine());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
 
-            switch (option)
-            {
-                case 1:
-                    result = x + y;
-                    break;
-                case 2:
-                    result = x - y;
-                    break;
-                case 3:
-                    result = x * y;
-                    break;
-                case 4:
-                    try
-                    {
-                        result = x / y;
-                    }
-                    catch (DivideByZeroException ex) when (y==0)
-                    {
-                        Console.WriteLine(ex.Message);
-                       
-                    }
+                Console.Write("Введите код операции:\n   1 - Сложение\n   2 - Вычитание\n   3 - Произведение\n   4 - Частное\nВаш выбор:");
+                int option = Convert.ToInt32(Console.ReadLine());
 
-                    break;
-                default:
-                    Console.WriteLine("Ошибка.");
-                    break;
-            }
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("Результат: {0}", x + y);
+                        break;
+                    case 2:
+                        Console.WriteLine("Результат: {0}", x - y);
+                        break;
+                    case 3:
+                        Console.WriteLine("Результат: {0}", x * y);
+                        break;
+                    case 4:
+                        try
+                        {
+                            Console.WriteLine("Результат: {0:f2}", (double)x / y);
+                        }
+                        catch (DivideByZeroException ex)
+                        {
+                            Console.WriteLine("Ошибка! {0}", ex.Message);
+                        }
 
-            return result;
+                        break;
+                    default:
+                        Console.WriteLine("Ошибка. Нет операции с указанным номером");
+                        break;
+                }
         }
     }
 }
